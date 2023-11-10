@@ -17,12 +17,12 @@ class Server  {
     }
 
     middlewares(){
-        this.app.Anime(cors());
-        this.app.Anime(express.json());
+        this.app.use(cors());
+        this.app.use(express.json());
     }
 
     routes() {
-        this.app.Anime(this.AnimePath, AnimeRouter)
+        this.app.use(this.AnimePath, AnimeRouter)
     }
     listen(){
         this.app.listen(this.port, () => {

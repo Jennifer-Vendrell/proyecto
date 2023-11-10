@@ -66,4 +66,4 @@ const animeModel = {
     `,
 }
 
-Module.exports = animeModel;
+module.exports = animeModel;

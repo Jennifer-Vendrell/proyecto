@@ -41,7 +41,7 @@ const listAnimeByID = async (req = request, res = response) => {
     try{
         conn =  await pool.getConnection();
 
-        const [Anime] = await conn.query(AnimeModel.getByRank, [Rank] ,(err)=>{
+        const [Anime] = await conn.query(animeModel.getByRank, [Rank] ,(err)=>{
             if (err){
                 throw err;
             }
@@ -187,7 +187,7 @@ const [NameExists] = await conn.query(animeModel.getByName, [Name], (err) => {
         }
       })
            const UpdateAnime = await conn.query(
-            AnimeModel.updateRow,
+            animeModel.updateRow,
             [...AnimeNewData, Rank],
             (err) =>{
                 if (err) throw err;
@@ -224,7 +224,7 @@ const deleteAnime = async (req = request, res = response) =>{
             res.status(404).json({msg: `Anime with ID ${id} not found`});
             return;
         }
-        const AnimeDeleted = await conn.query(AnimeModel.deleteAnime,[Rank],(err) =>{
+        const AnimeDeleted = await conn.query(animeModel.deleteAnime,[Rank],(err) =>{
             if (err) throw err;
         });
         
