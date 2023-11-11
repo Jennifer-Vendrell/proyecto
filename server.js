@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const AnimeRouter = require('./routes/Anime')
+const animeRouter = require('./routes/anime')
 
 class Server  {
     constructor(){
@@ -10,7 +10,7 @@ class Server  {
 
         // Paths
         this.basePath = '/api/v1';
-        this.AnimePath = `${this.basePath}/Anime`;
+        this.animePath = `${this.basePath}/anime`;
 
         this.middlewares();
         this.routes();
@@ -22,7 +22,7 @@ class Server  {
     }
 
     routes() {
-        this.app.use(this.AnimePath, AnimeRouter)
+        this.app.use(this.animePath, animeRouter)
     }
     listen(){
         this.app.listen(this.port, () => {

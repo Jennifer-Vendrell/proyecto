@@ -1,20 +1,20 @@
 const express = require('express')
 const router = express.Router();
-const {listAnime, 
-    listAnimeByID,
-     addAnime,
-      deleteAnime, 
-      updateAnime} = require ('../controllers/Anime');
+const {listanime, 
+    listanimeByID,
+     addanime,
+      deleteanime, 
+      updateanime} = require ('.../controllers/anime');
 
 
-router.get('/', listAnime);
-router.get('/:Rank',listAnimeByID); // https//localhost:3000/api/v1/Anime/?
-router.put('/', addAnime);
-router.patch('/:Rank', updateAnime);
-router.delete('/:Rank', deleteAnime);
+router.get('/', listanime);
+router.get('/:Rank',listanimeByID); // https//localhost:3000/api/v1/anime/?
+router.put('/', addanime);
+router.patch('/:Rank', updateanime);
+router.delete('/:Rank', deleteanime);
 
 module.exports = router
 
-// http://localhost:3000/api/v1/Anime
+// http://localhost:3000/api/v1/anime
 
 

@@ -3,13 +3,13 @@ const animeModel = {
         SELECT
             *
         FROM
-            Anime
+            anime
     `,
     getByRank: `
     SELECT
     *
     FROM
-        Anime
+        anime
     WHERE
         Rank= ?
     `,
@@ -17,17 +17,15 @@ const animeModel = {
     SELECT
     *
     FROM
-        Anime
+        anime
     WHERE
         Name= ?
     `,
     
-    addAnime:`
+    addanime:`
     INSERT INTO
-        Anime
+        anime
          (
-       
-        
         Name,
         Type,
         Episodes,
@@ -38,16 +36,12 @@ const animeModel = {
             ?,
             ?,
             ?,
-            ?,
-            ?,
-            ?,
-            ?,
             ?
         )
     `,
-    updateAnime: `
+    updateanime: `
     UPDATE
-        Anime
+        anime
     SET
     Name = ?
     Type = ?
@@ -58,9 +52,9 @@ const animeModel = {
     WHERE
         Rank = ?
 `,
-    deleteAnime: `         
+    deleteanime: `         
         UPDATE FROM
-            Anime
+            anime
      WHERE
          Rank = ?
     `,

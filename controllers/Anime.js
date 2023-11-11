@@ -4,7 +4,7 @@ const pool = require('../db');
 
 // primer endpoint
 
-const listAnime= async (req = request, res = response) => {
+const listanime= async (req = request, res = response) => {
     let conn;
 
     try{
@@ -29,7 +29,7 @@ const listAnime= async (req = request, res = response) => {
 
 // segundo endpoint
 
-const listAnimeByID = async (req = request, res = response) => {
+const listanimeByID = async (req = request, res = response) => {
     const {Rank} = req.params;
     let conn;
 
@@ -41,18 +41,18 @@ const listAnimeByID = async (req = request, res = response) => {
     try{
         conn =  await pool.getConnection();
 
-        const [Anime] = await conn.query(animeModel.getByRank, [Rank] ,(err)=>{
+        const [anime] = await conn.query(animeModel.getByRank, [Rank] ,(err)=>{
             if (err){
                 throw err;
             }
         })
 
-        if (!Anime){
+        if (!anime){
             res.status(404).json({msg: `Anime with ID ${Rank} not found`});
             return;
         }
 
-        res.json(Anime);
+        res.json(anime);
     } catch (error){
         console.log(error);
         res.status(500).json(error);
@@ -65,65 +65,61 @@ const listAnimeByID = async (req = request, res = response) => {
 
 // tercer endpoint
 
-const addAnime = async (req = request, res = response) =>{
+const addanime = async(req = request, res = response) => {
     const {
-        
-        
-        Name,
-        Type,
-        Episodes,
-        Studio, 
+            Rank,
+            Name,
+            Type,
+            Episodes,
+            Studio
+            
     } = req.body;
 
-    if (  !Name  || !Type || !Episodes || !Studio ){
-        res.status(400).json({msg: 'Missing information'});
+    if (!Rank || !Name || !Type || !Episodes || !Studio ) {
+        res.status(400).json({msg: 'MISSING INFORMATION'});
         return;
     }
-
-
-
-    const Anime= 
-       [
-        
+    const movie = [
+        Rank,
         Name,
         Type,
         Episodes,
-        Studio,
-         ]
+        Studio
+        ]
+
     let conn;
 
-    try{
+    try {
         conn = await pool.getConnection();
 
-        const [AnimeExists] = await conn.query(AnimeModel.getByAnime,[Anime],(err)=>{
+        const [NameExists] = await conn.query(animeModel.getByName, [Name], (err) => {
             if (err) throw err;
-        })
-        if (AnimeExists){
-            res.status(409).json({msg: `Anime ${Anime} already exists`});
-            return;
-        }
+            })
+            if (NameExists) {
+                res.status(409).json({msg: 'Name ${Name} already exists'});
+                return;
+               }
 
-        
 
-        const AnimeAdded = await conn.query(AnimeModel.addRow,[...Anime], (err)=>{
+        const NameAdded = await conn.query(animeModel.addanime, [...movie], (err) => {
             if (err) throw err;
-        })
-
-        if (AnimeAdded.affectedRows === 0){
-            throw new Error('Anime not Added');
-        }
-        
-        res.json({msg: 'Anime added succesfully'})
+            })
+            if (NameAdded.affecteRows === 0){
+                throw new Error('anime not added')
+            }                                                   
+            res.json({msg: 'USER ADDED SECCESFULLY'});        
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
-    } finally{
-        if (conn) conn.end();
+        return;
+    }finally{
+        
+        if(conn)conn.end();
+        
     }
-}
-
+    }
 // cuarto endpoitn Aqui va la para actualizar un usuario si existe
-const updateAnime = async (req = request, res = response) => {
+const updateanime = async (req = request, res = response) => {
     let conn;
 
     const {
@@ -210,7 +206,7 @@ const [NameExists] = await conn.query(animeModel.getByName, [Name], (err) => {
 }
 // quinto endpoitn 
 
-const deleteAnime = async (req = request, res = response) =>{
+const deleteanime = async (req = request, res = response) =>{
     let conn;
     const {Rank} = req.params;
 
@@ -249,6 +245,6 @@ const deleteAnime = async (req = request, res = response) =>{
 
 
 
-module.exports = {listAnime, listAnimeByID, addAnime, updateAnime ,deleteAnime}
+module.exports = {listanime, listanimeByID, addanime, updateanime ,deleteanime}
 
 // routes       controllers       models(DB)
