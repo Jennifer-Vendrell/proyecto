@@ -29,7 +29,7 @@ const listanime= async (req = request, res = response) => {
 
 // segundo endpoint
 
-const listanimeByID = async (req = request, res = response) => {
+const listanimeByRank = async (req = request, res = response) => {
     const {Rank} = req.params;
     let conn;
 
@@ -48,7 +48,7 @@ const listanimeByID = async (req = request, res = response) => {
         })
 
         if (!anime){
-            res.status(404).json({msg: `Anime with ID ${Rank} not found`});
+            res.status(404).json({msg: `anime with ID ${Rank} not found`});
             return;
         }
 
@@ -79,7 +79,7 @@ const addanime = async(req = request, res = response) => {
         res.status(400).json({msg: 'MISSING INFORMATION'});
         return;
     }
-    const movie = [
+const anime = [
         Rank,
         Name,
         Type,
@@ -134,7 +134,7 @@ const updateanime = async (req = request, res = response) => {
     const {Rank} = req.params;
 
 
-    let AnimeNewData = [
+    let animeNewData = [
         
         Name,
         Type,
@@ -146,15 +146,15 @@ const updateanime = async (req = request, res = response) => {
     try {
         conn = await pool.getConnection();
 
-const [AnimeExists] = await conn.query
+const [animeExists] = await conn.query
 (animeModel.getByRank, 
     [Rank], 
     (err) => {
     if (err) throw err;
 });
 
-if (!AnimeExists || AnimeExists.is_active === 0){
-    res.status(409).json({msg: `Anime with ID ${Rank} not found`});
+if (!animeExists || animeExists.is_active === 0){
+    res.status(409).json({msg: `anime with ID ${Rank} not found`});
          return;
 }
 
@@ -168,33 +168,33 @@ const [NameExists] = await conn.query(animeModel.getByName, [Name], (err) => {
 
 
 
-        const AnimeOldData = [
+        const animeOldData = [
         
-        AnimeExists.Name,
-        AnimeExists.Type,
-        AnimeExists.Episodes,
-        AnimeExists.Studio,
+        animeExists.Name,
+        animeExists.Type,
+        animeExists.Episodes,
+        animeExists.Studio,
           
       ];
 
-      AnimeNewData.forEach((AnimeData, index) =>{
-        if (!AnimeData){
-            AnimeNewData[index] = AnimeOldData[index];
+      animeNewData.forEach((animeData, index) =>{
+        if (!animeData){
+            animeNewData[index] = animeOldData[index];
         }
       })
-           const UpdateAnime = await conn.query(
+           const Updateanime = await conn.query(
             animeModel.updateRow,
-            [...AnimeNewData, Rank],
+            [...animeNewData, Rank],
             (err) =>{
                 if (err) throw err;
             }
            )
 
- if (UpdateAnime.affecteRows === 0){
-   throw new Error('Anime not added')
+ if (Updateanime.affecteRows === 0){
+   throw new Error('anime not added')
         } 
 
-        res.json({msg: 'Anime UPDATED SECCESFULLY'});
+        res.json({msg: 'anime UPDATED SECCESFULLY'});
         
     } catch (error) {
         console.log(error);
@@ -213,22 +213,22 @@ const deleteanime = async (req = request, res = response) =>{
     try{
         conn = await pool.getConnection();
 
-        const [AnimeExists] = await conn.query(animeModel.getByRank,[Rank], (err) =>{
+        const [animeExists] = await conn.query(animeModel.getByRank,[Rank], (err) =>{
             if (err) throw err;
         });
-        if (!AnimeExists || AnimeExists.is_active === 0){
-            res.status(404).json({msg: `Anime with ID ${id} not found`});
+        if (!animeExists || AnimeExists.is_active === 0){
+            res.status(404).json({msg: `anime with ID ${id} not found`});
             return;
         }
-        const AnimeDeleted = await conn.query(animeModel.deleteAnime,[Rank],(err) =>{
+        const animeDeleted = await conn.query(animeModel.deleteanime,[Rank],(err) =>{
             if (err) throw err;
         });
         
-        if (AnimeDeleted.affectedRows === 0){
-            throw new Error('Anime not deleted');
+        if (animeDeleted.affectedRows === 0){
+            throw new Error('anime not deleted');
         }
 
-        res.json({msg:'Anime deleted succesfully'});
+        res.json({msg:'anime deleted succesfully'});
 
     }catch (error){
         console.log(error);
@@ -245,6 +245,6 @@ const deleteanime = async (req = request, res = response) =>{
 
 
 
-module.exports = {listanime, listanimeByID, addanime, updateanime ,deleteanime}
+Module.exports = {listanime, listanimeByRank, addanime, updateanime ,deleteanime}
 
 // routes       controllers       models(DB)
