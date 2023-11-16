@@ -1,6 +1,6 @@
 const {request, response} = require('express');
-const animeModel = require('../models/anime');
-const pool = require('../DB');
+const animeModel = require('./models/anime');
+const pool = require('./DB');
 
 // Enpoint 1//
 const listanime = async(req = request, res = response)  => {
@@ -96,7 +96,7 @@ const listanimeByID = async(req = request, res = response)  => {
                 if (err) throw err;
                 })
                 if (NameExists) {
-                    res.status(409).json({msg: 'Name ${Name} already exists'});
+                    res.status(409).json({msg: `Name ${Name} already exists`});
                     return;
                    }
 
@@ -172,7 +172,7 @@ const listanimeByID = async(req = request, res = response)  => {
                 animeExists.Name,
                 animeExists.Type,
                 animeExists.Episodes,
-                animeExists.Studio,
+                animeExists.Studio
            
               ];
 
@@ -256,4 +256,4 @@ const listanimeByID = async(req = request, res = response)  => {
         }
    
         
-    Module.exports = {listanime, listanimeByID, addanime, updateanime, deleteanime, }
+module.exports = {listanime, listanimeByID, addanime, updateanime, deleteanime }

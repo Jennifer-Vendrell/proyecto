@@ -47,7 +47,6 @@ const animeModel = {
     Episodes= ?,
     Studio = ?
    
-    
     WHERE
        Rank=?
     `,
@@ -59,7 +58,7 @@ const animeModel = {
        WHERE
            Rank =?
     
-    `,
+    `
     }
-    Module.exports = animeModel;
+    module.exports = animeModel;
     
