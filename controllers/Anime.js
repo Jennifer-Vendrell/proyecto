@@ -1,6 +1,6 @@
 const {request, response} = require('express');
-const animeModel = require('./models/anime');
-const pool = require('./DB');
+const animeModel = require('../models/anime');
+const pool = require('../db');
 
 // Enpoint 1//
 const listanime = async(req = request, res = response)  => {

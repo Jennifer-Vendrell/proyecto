@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { listanime, listanimeByID, addanime, updateanime, deleteanime} = require('./controllers/anime');
+const { listanime, listanimeByID, addanime, updateanime, deleteanime} = require('../controllers/anime');
 
 
 router.get('/', listanime);                            

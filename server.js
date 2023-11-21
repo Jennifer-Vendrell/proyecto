@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const animeRouter = require('.routes/anime');
+const animeRouter = require('../routes/anime');
 
 class Server  {
     constructor(){

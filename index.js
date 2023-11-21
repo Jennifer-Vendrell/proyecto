@@ -1,6 +1,6 @@
 const Server = require('./server');
 
-const Server = new Server();
+const server = new Server();
 
-Server.listen();
+server.listen();
 
